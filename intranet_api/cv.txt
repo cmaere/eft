@@ -1,0 +1,23 @@
+Computer Vision -- Analyses Videos, Images, even Sound, and enables a computer system to make a descision without human aid
+It started with studies on how a human analyses vision through the eyes  being able to make a descision
+How it has crosscut other technologies like 
+Speech processing and Natural languages, 
+Haptic Techonology
+Augumented View
+
+
+How Computer Vision is Applied in day to day techonlogy
+
+Face recognition
+	facebook face recognition
+	Iphone and Samsung face Recognition security
+Object detection and recognition
+	Auto Piloting and Auto Landing of Airplanes
+	Computer Aided Medical Descision Making
+	Google Car (Auto Driven Car)
+Video Survellance
+	Event recognition
+Natural Languages
+	Iphone voice recognition
+
+	 

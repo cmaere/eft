@@ -1,0 +1,28 @@
+application: cha-saris-1
+version: 1
+runtime: php
+api_version: 1
+
+handlers:
+- url: /include/.*
+  script: blank.php
+- url: /Zend/.*
+  script: Version.php
+  
+- url: /cha_files
+  static_dir: cha_files
+  
+- url: /landpage
+  static_dir: landpage
+- url: /img
+  static_dir: img
+  
+- url: /fonts
+  static_dir: fonts
+
+- url: /images
+  static_dir: images
+  
+- url: /.*
+  script: index.php
+ 
