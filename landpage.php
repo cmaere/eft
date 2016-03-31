@@ -14,7 +14,7 @@
 	$template->loadTemplateFile("main.tpl");
 	// parse header block
 	$template->setCurrentBlock("header");
-	$template->setVariable("TITLE", "TNM Dealer Management System");
+	$template->setVariable("TITLE", "EFT");
 	if($page=="Register")
 	{
 		$template->setVariable("URL", "./");
@@ -43,7 +43,7 @@
 	}
 	$template->loadTemplateFile("main_footer.tpl");
 	$template->setCurrentBlock("footer");
-	$template->setVariable("FOOTER_TITTLE", "2014 SARIS");
+	$template->setVariable("FOOTER_TITTLE", "2016 EFT SMS");
 	$template->parseCurrentBlock();
 	$template->show();
 	

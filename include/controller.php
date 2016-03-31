@@ -95,7 +95,7 @@ $template->show();
 //die("am here");
 switch($page)
 {
-	case "Institution" :
+	case "EFT" :
 		require_once("include/admission/institution.php");
 		break;
 	case "Faculty" :

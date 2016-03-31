@@ -20,8 +20,8 @@ $editFormAction = $_SERVER['PHP_SELF'];
 	                       GetSQLValueString($_POST['txtTel'], "text"),
 	                       GetSQLValueString($_POST['txtEmail'], "text"));
 
-	  mysql_select_db($database_cha, $cha);
-	  $Result1 = mysql_query($insertSQL, $cha) or die(mysql_error());
+	  //mysqli_select_db($database_cha, $cha);
+	  $Result1 = mysqli_query($cha,$insertSQL) or die(mysql_error());
                        echo '<meta http-equiv = "refresh" content ="0; 
 url = ./?page=$page&section$section&pageNum_inst=0">';
 exit;
@@ -37,8 +37,8 @@ exit;
 			 if ($i !="")
 			 {
 				 $sqldelete="DELETE FROM campus WHERE CampusID=$i";
-				 mysql_select_db($database_cha, $cha);
-				 $Result1 = mysql_query($sqldelete, $cha) or die(mysql_error());
+				// mysqli_select_db($database_cha, $cha);
+				 $Result1 = mysqli_query($cha,$sqldelete) or die(mysqli_error());
 				 
 			 }
 			 
@@ -58,8 +58,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "frmInstEdit"))
                        GetSQLValueString($_POST['txtEmail'], "text"),
                        GetSQLValueString($_POST['id'], "int"));
 
-  mysql_select_db($database_cha, $cha);
-  $Result1 = mysql_query($updateSQL, $cha) or die(mysql_error());
+  //mysqli_select_db($database_cha, $cha);
+  $Result1 = mysqli_query($cha,$updateSQL) or die(mysql_error());
 
   $updateGoTo = "./";
   if (isset($_SERVER['QUERY_STRING'])) 
@@ -83,16 +83,16 @@ if (isset($_GET['pageNum_inst']))
 $startRow_inst = $pageNum_inst * $maxRows_inst;
 
 
-mysql_select_db($database_cha, $cha);
+//mysql_select_db($database_cha, $cha);
 $query_inst = "SELECT CampusID, Campus, Location, Address, Tel, Email FROM campus ORDER BY Campus ASC";
 $query_limit_inst = sprintf("%s LIMIT %d, %d", $query_inst, $startRow_inst, $maxRows_inst);
-$inst = mysql_query($query_limit_inst, $cha) or die(mysql_error());
-$row_inst = mysql_fetch_assoc($inst);
+$inst = mysqli_query($cha,$query_limit_inst) or die(mysqli_error());
+$row_inst = mysqli_fetch_assoc($inst);
 
 if (isset($_GET['totalRows_inst'])) {
   $totalRows_inst = $_GET['totalRows_inst'];
 } else {
-  $all_inst = mysql_query($query_inst);
+  $all_inst = mysqli_query($query_inst);
   $totalRows_inst = mysql_num_rows($all_inst);
 }
 $totalPages_inst = ceil($totalRows_inst/$maxRows_inst);

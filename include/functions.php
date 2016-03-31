@@ -16,17 +16,19 @@ function getJson($url) {
         // cache files are created like cache/abcdef123456...
         $cacheFile = 'cache' . DIRECTORY_SEPARATOR . md5($url);
 	
-
+		
         if (file_exists($cacheFile)) {
 	
             $fh = fopen($cacheFile, 'r');
             $cacheTime = trim(fgets($fh));
+			die($cacheTime." = ".strtotime('-60 minutes'));
 	    
             // if data was cached recently, return cached data
             if ($cacheTime > strtotime('-60 minutes')) {
+				//die("here in in");
 		    
 		$cachedjson = fgets($fh);
-		//die($cachedjson);
+		die($cachedjson);
                 return $cachedjson;
 		
             }
@@ -42,6 +44,7 @@ function getJson($url) {
         fwrite($fh, time() . "\n");
         fwrite($fh, $json);
         fclose($fh);
+		chmod($cacheFile, 0777);
 
         return $json;
     }

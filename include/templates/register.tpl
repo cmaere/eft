@@ -4,9 +4,9 @@
 			<div class="row">
 				<div class="col-lg-6 col-md-7 col-sm-6">
 					<div class="slogan" >
-						<h2 class="wow fadeInRight" data-wow-delay="0.6s" data-wow-duration="0.5s">SARIS</h2>
-						<h3 class="wow fadeInLeft" data-wow-delay="0.9s" data-wow-duration="0.5s">Student Record Information System</h3>
-						<p class="wow fadeInRight" data-wow-delay="1.2s">This is an opensource system for Kamuzu College of Nursing to assist in registration of students, financial recording, examination grades records, transcript generation, student accommodation management, and keeping student records.</p>
+						<h2 class="wow fadeInRight" data-wow-delay="0.6s" data-wow-duration="0.5s">EFT</h2>
+						<h3 class="wow fadeInLeft" data-wow-delay="0.9s" data-wow-duration="0.5s">Electronic Funds Transfer</h3>
+						<p class="wow fadeInRight" data-wow-delay="1.2s">This is an opensource system for Kamuzu College of Nursing to assist in Notifying staff on Electronic funds transfer.</p>
 					</div>
 				</div>
 				

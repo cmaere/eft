@@ -4,7 +4,7 @@
 <head>
 	
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> <meta charset="utf-8">
- <title>Student Academic Record Information System</title> 
+ <title>Electronic Funds Transfer</title> 
 <meta name="description" content="saris, kcn, nursing, university, malawi, kamuzu, college, ict, exams"> 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -27,7 +27,7 @@
 				    <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav"> 
 					    <i class="fa fa-bars"></i>
 				     </a> 
-				     <a href="#" class="nav-brand" data-toggle="fullscreen">Saris</a> 
+				     <a href="#" class="nav-brand" data-toggle="fullscreen">EFT SMS</a> 
 				     <a class="btn btn-link visible-xs" data-toggle="class:show" data-target=".nav-user"> 
 					     <i class="fa fa-comment-o"></i> 
 				     </a> 
@@ -113,7 +113,7 @@
 
  <!-- BEGIN note --> 
  
- <div class="bg-danger wrapper hidden-vertical animated fadeInUp text-sm"> <a href="#" data-dismiss="alert" class="pull-right m-r-n-sm m-t-n-sm"><i class="fa fa-times"></i></a> Hi {LOGINNAME} welcome to saris 
+ <div class="bg-danger wrapper hidden-vertical animated fadeInUp text-sm"> <a href="#" data-dismiss="alert" class="pull-right m-r-n-sm m-t-n-sm"><i class="fa fa-times"></i></a> Hi {LOGINNAME} welcome to EFT SMS 
  </div> 
  
  
