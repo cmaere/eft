@@ -28,7 +28,7 @@
  * @access   public
  */
 
-require_once 'PEAR.php';
+require_once 'C:/wamp/bin/php/php5.5.12/PEAR.php';
 
 define('IT_OK', 1);
 define('IT_ERROR', -1);

@@ -5,7 +5,7 @@ $szWebmasterEmail = '< cmaere@.kcn.unima.mw >';
 
 
 @$hostname_cha = "localhost";
-@$database_cha = "etf";
+@$database_cha = "eft";
 @$username_cha = "toor";
 @$password_cha = "";
 

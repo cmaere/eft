@@ -96,7 +96,7 @@ $template->show();
 switch($page)
 {
 	case "EFT" :
-		require_once("include/admission/institution.php");
+		require_once("include/eft/upload.php");
 		break;
 	case "Faculty" :
 		require_once("include/admission/admissionFaculty.php");

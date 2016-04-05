@@ -1,23 +1,26 @@
-
-
 <div class="col-lg-8">	
 <section class="panel"> 
 	<!-- BEGIN heading-->
 	<header class="panel-heading">{PAGENAME}</header> 
 	<div class="row text-sm wrapper"> 
-		<div class="col-sm-5 m-b-xs">
-			<a href="{LINK}">
-				<button class="btn btn-sm btn-white">{BUTTONNAME}</button>
-			</a> 
-		</div> 
-		<div class="col-sm-4 m-b-xs"> </div> 
-		<div class="col-sm-3"> 
-			<div class="input-group"> 
-				<input type="text" placeholder="Search" class="input-sm form-control"> 
-				<span class="input-group-btn"> 
-					<button type="button" class="btn btn-sm btn-white">Go!</button> 
-				</span> 
-			</div> 
+	<div class="col-lg-7">
+		 <form  name="upload" action="{ACTION}" method="POST" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="email">Email address:</label>
+				<input type="email" class="form-control" name="email">
+			</div>
+			<div class="form-group">
+				<label for="encry">Encryption file</label>
+				<input type="file" class="form-control" name="encry">
+			</div>
+			<div class="form-group">
+				<label for="csv">CSV/Excel</label>
+				<input type="file" class="form-control" name="csv">
+			</div>
+			<button type="submit" class="btn btn-success">Submit</button>
+			<input type="hidden" name="submit" value="upload">
+			</form>
+			</div>
 		</div> 
 	</div> 
 	<!-- END heading-->
