@@ -1,114 +1,107 @@
 
+
+
 <?php
 
 $currentPage = $_SERVER["PHP_SELF"];
 $editFormAction = $_SERVER['PHP_SELF'];
+require('twilio-php/Services/Twilio.php');
+include "emailClass.php";
 
+$sid = "ACd5d53455218578f6c3d4ce3c3b0bc841"; // Your Account SID from www.twilio.com/user/account
+$token = "1638e6090ec3b8cce3c250129f76c679"; // Your Auth Token from www.twilio.com/user/account
+$hostnumber = '+19804042807';
 	
 
 // upload form action processing
-if ((isset($_POST["submit"])) && ($_POST["submit"] == "upload")) 
+if ((isset($_POST["submit"])) && ($_POST["submit"] == "upload"))	
 	{
-		
-			$file = $_FILES['csv']['tmp_name'];
-			$handle = fopen($file,"r");
-			while (($fileop = fgetcsv($handle, 1000, ",")) !== FALSE) {
-				$FirstName= $fileop[0];
-				$LastName=$fileop[1];
-				$phoneNumber= $fileop[2];
-				$purpose= $fileop[3];
-				$amount= $fileop[4];
-				
-		       $sql=mysqli_query($cha,"INSERT INTO sms_list (fname,lname,phone_number,purpose,amount)
-			   VALUES ('$FirstName','$LastName','$phoneNumber','$purpose','$amount')");
-			}
-		if($sql){
-			 $query = "SELECT * FROM sms_list limit 3";
-				 $list = mysqli_query($cha,$query);
-				 
-				 //push name purpose and phoneNumber into the array
-				 while($rows = mysqli_fetch_array($list))
-				 {
-					 $list_array[] = array(
-					       'fname' => $rows['fname'],
-						   'purpose' => $rows['purpose'],
-						   'phone_number'=>$rows['phone_number']
-					 );
-				 } 
-				 
-				 //
-				foreach($list_array as $detail):
-					$name = $detail['fname'];
-					$purpose = $detail['purpose'];
-					$phoneNumber = $detail['phone_number'];
-					
-					echo $name. '  '.$purpose.'		'.$phoneNumber;
-				endforeach;	
-				
-				 } 
-			
-		}
-			
-	
-		
-			
-	/* Send an SMS using Twilio. You can run this file 3 different ways:
-     *
-     * - Save it as sendnotifications.php and at the command line, run 
-     *        php sendnotifications.php
-     *
-     * - Upload it to a web host and load mywebhost.com/sendnotifications.php 
-     *   in a web browser.
-     * - Download a local server like WAMP, MAMP or XAMPP. Point the web root 
-     *   directory to the folder containing this file, and load 
-     *   localhost:8888/sendnotifications.php in a web browser.
-    
- 
-    // Step 1: Download the Twilio-PHP library from twilio.com/docs/libraries, 
-    // and move it into the folder containing this file.
-    require "twilio-php-master/Services/Twilio.php";
- 
-    // Step 2: set our AccountSid and AuthToken from www.twilio.com/user/account
-    $AccountSid = "AC2ae7750dd060fb55405b80d626a048a5";
-    $AuthToken = "4967af20455dacf0e39f6f00b27fc429";
- 
-    // Step 3: instantiate a new Twilio Rest Client
-    $client = new Services_Twilio($AccountSid, $AuthToken);
- 
-    // Step 4: make an array of people we know, to send them a message. 
-    // Feel free to change/add your own phone number and name here.
-    $people = array(
-        "+265992227931" => "chiku haclin felix augustine phiri",
-       // "+14158675310" => "Boots",
-        //"+14158675311" => "Virgil",
-    );
- 
-    // Step 5: Loop over all our friends. $number is a phone number above, and 
-    // $name is the name next to it
-    foreach ($people as $number => $name) {
- 
-        $sms = $client->account->messages->sendMessage(
- 
-        // Step 6: Change the 'From' number below to be a valid Twilio number 
-        // that you've purchased, or the (deprecated) Sandbox number
-            "+13343758476", 
- 
-            // the number we are sending to - Any phone number
-            $number,
- 
-            // the sms body
-            "Hey $name, Monkey Party at 6PM. Bring Bananas!"
-        );
- 
-        // Display a confirmation message on the screen
-        echo "Sent message to $name";
-    } 
-			
-		}
-			
-	}
-*/
+		//check if encryption file has been attached
+		if(!empty($_FILES['encry']['name']))
+		{
 
+				$testEmail=new email;
+
+				$sendTo= $_POST['email'];
+				
+				//directory to keep temporary files
+				$dir = "images/";
+				
+				$attNametmp = $_FILES['encry']['tmp_name'];
+				$attName = $_FILES['encry']['name'];
+				$directory=$dir.$attName;
+				
+				move_uploaded_file($attNametmp,$directory);
+															
+				//check if email has been sent successfully
+				if($testEmail->emailWithAttach($directory,$sendTo))
+				{
+				
+					 
+					$file = $_FILES['csv']['tmp_name'];
+					$handle = fopen($file,"r");
+					
+					//count to keep track of how many rows in a csv file
+					$count=0;
+						while (($fileop = fgetcsv($handle, 1000, ",")) !== FALSE)
+						{
+								$FirstName= $fileop[0];
+								$LastName=$fileop[1];
+								//to get only last 9 digits
+								$phoneNumber= substr($fileop[2],-9);
+								$purpose= $fileop[3];
+								$amount= $fileop[4];
+								$count++;
+				
+							$sql=mysqli_query($cha,"INSERT INTO sms_list (fname,lname,phone_number,purpose,amount)
+							VALUES ('$FirstName','$LastName','$phoneNumber','$purpose','$amount')");
+						}
+						if($sql)
+						{
+					
+							$query = "SELECT * FROM sms_list ORDER BY id DESC limit ".$count."";
+			 
+							$list = mysqli_query($cha,$query);
+				 
+							//push name purpose and phoneNumber into an array
+							while($rows = mysqli_fetch_array($list))
+							{
+								$list_array[] = array(
+									'fname' => $rows['fname'],
+									'purpose' => $rows['purpose'],
+									'phone_number'=>'+265'.$rows['phone_number']
+								);
+							} 
+				 
+				 
+								foreach($list_array as $detail):
+								$name = $detail['fname'];
+								$purpose = $detail['purpose'];
+								$phoneNumber = $detail['phone_number'];
+					
+		
+								$client = new Services_Twilio($sid, $token);
+								$message = $client->account->messages->sendMessage(
+								$hostnumber, // From a valid Twilio number
+								$phoneNumber, // Text this number
+								$purpose	//message
+								);
+							endforeach;	
+				
+							echo "successful";
+						}	
+	
+				}else
+				{
+					echo "email send failed";
+				}		
+		}
+		else
+		{
+			echo "encryption file not attached";
+		}
+	}	
+	
 // display to common template	
 	
 $template->loadTemplateFile("common_header.tpl");
