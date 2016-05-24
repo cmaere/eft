@@ -7,7 +7,7 @@
 		 <form  name="upload" action="{ACTION}" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="email">Email address:</label>
-				<input type="email" class="form-control" name="email">
+				<input type="email" class="form-control" name="email" required>
 			</div>
 			<div class="form-group">
 				<label for="encry">Encryption file</label>

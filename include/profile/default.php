@@ -1,7 +1,7 @@
 
 	<?php
 		
-	$profile_stat =  studentindex($_SESSION['username'],$cha);
+	//$profile_stat =  studentindex($_SESSION['username'],$cha);
 	
 	?>
 	
@@ -54,7 +54,7 @@
 								  <small class="block text-muted">administrator</small> 
 							  </div>
 						  </div> 
-						  <p> exams have been published </p> 
+						
 						  <small class=""> <a href="#"><i class="fa fa-share"></i> Share (10)</a> </small> 
 					  </div> 
 					  <footer class="panel-footer"> 
@@ -65,7 +65,7 @@
 				  </div> 
 			  </aside> 
 			  <aside class="bg-primary clearfix lter r-r text-right v-middle"> 
-				  <div class="wrapper h3 font-thin">Saris new look and feel </div> 
+				  <div class="wrapper h3 font-thin"> </div> 
 			  </aside> 
 		  </section> 
 	  </div>

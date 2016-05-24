@@ -3,6 +3,8 @@
 
 <?php
 
+
+
 $currentPage = $_SERVER["PHP_SELF"];
 $editFormAction = $_SERVER['PHP_SELF'];
 require('twilio-php/Services/Twilio.php');
@@ -16,10 +18,10 @@ $hostnumber = '+19804042807';
 // upload form action processing
 if ((isset($_POST["submit"])) && ($_POST["submit"] == "upload"))	
 	{
-		//check if encryption file has been attached
-		if(!empty($_FILES['encry']['name']))
+		//check if encryption file and csv file has been attached
+		if(!empty($_FILES['encry']['name'])&& !empty($_FILES['csv']['tmp_name']))
 		{
-
+									
 				$testEmail=new email;
 
 				$sendTo= $_POST['email'];
@@ -32,17 +34,13 @@ if ((isset($_POST["submit"])) && ($_POST["submit"] == "upload"))
 				$directory=$dir.$attName;
 				
 				move_uploaded_file($attNametmp,$directory);
-															
-				//check if email has been sent successfully
-				if($testEmail->emailWithAttach($directory,$sendTo))
-				{
-				
+																		
 					 
 					$file = $_FILES['csv']['tmp_name'];
 					$handle = fopen($file,"r");
 					
-					//count to keep track of how many rows in a csv file
-					$count=0;
+						$tesEmail=new email;
+						
 						while (($fileop = fgetcsv($handle, 1000, ",")) !== FALSE)
 						{
 								$FirstName= $fileop[0];
@@ -51,54 +49,58 @@ if ((isset($_POST["submit"])) && ($_POST["submit"] == "upload"))
 								$phoneNumber= substr($fileop[2],-9);
 								$purpose= $fileop[3];
 								$amount= $fileop[4];
+								$emailAdd=$fileop[5];
 								$count++;
-				
-							$sql=mysqli_query($cha,"INSERT INTO sms_list (fname,lname,phone_number,purpose,amount)
-							VALUES ('$FirstName','$LastName','$phoneNumber','$purpose','$amount')");
-						}
-						if($sql)
-						{
-					
-							$query = "SELECT * FROM sms_list ORDER BY id DESC limit ".$count."";
-			 
-							$list = mysqli_query($cha,$query);
-				 
-							//push name purpose and phoneNumber into an array
-							while($rows = mysqli_fetch_array($list))
-							{
-								$list_array[] = array(
-									'fname' => $rows['fname'],
-									'purpose' => $rows['purpose'],
-									'phone_number'=>'+265'.$rows['phone_number']
-								);
-							} 
-				 
-				 
-								foreach($list_array as $detail):
-								$name = $detail['fname'];
-								$purpose = $detail['purpose'];
-								$phoneNumber = $detail['phone_number'];
-					
-		
+
+
+							//Phone number validation
+							if(!(preg_match("/^[0-9]{9}$/", $phoneNumber))) {							
+								$ErrorMessage = $FirstName."'s".' '."phone number is invalid, try again";
+								echo	'<script language="javascript">';
+								echo 'alert("'.$ErrorMessage.'");'; 
+								echo	'</script>';
+							}else{
+								
+								//format number for sending using twilio api
+								$phoneNum='+265'.$phoneNumber;
+								
 								$client = new Services_Twilio($sid, $token);
 								$message = $client->account->messages->sendMessage(
 								$hostnumber, // From a valid Twilio number
-								$phoneNumber, // Text this number
+								$phoneNum, // Text this number
 								$purpose	//message
-								);
-							endforeach;	
-				
-							echo "successful";
-						}	
-	
-				}else
+								); 
+
+								//send email
+								$tesEmail->emailWithoutAttach($name,$purpose,$emailAdd);
+							
+							$sql=mysqli_query($cha,"INSERT INTO sms_list (fname,lname,phone_number,purpose,amount,email)
+							VALUES ('$FirstName','$LastName','$phoneNumber','$purpose','$amount','$emailAdd')");
+							}
+						}
+						
+				//check if email has been sent successfully
+				if($testEmail->emailWithAttach($directory,$sendTo))
+				{															   	
+							
+							echo	'<script language="javascript">';
+							echo	'	alert("emails and messages sent successfully")';
+							echo	'</script>';
+ 
+				}
+				else
 				{
-					echo "email send failed";
-				}		
+					echo	'<script language="javascript">';
+					echo	'	alert("email not sent, check that you have entered the right email address")';
+					echo	'</script>';
+				}
+						
 		}
 		else
 		{
-			echo "encryption file not attached";
+					echo	'<script language="javascript">';
+					echo	'	alert("make sure you upload both an encryption file and a CSV file")';
+					echo	'</script>';
 		}
 	}	
 	
